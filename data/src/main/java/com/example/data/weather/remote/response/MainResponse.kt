@@ -9,6 +9,11 @@ data class MainResponse(
     @SerializedName("temp_max") val tempMax: Double,
     @SerializedName("pressure") val pressure: Int,
     @SerializedName("humidity") val humidity: Int,
-    @SerializedName("sea_level") val seaLevel: Int?,
-    @SerializedName("grnd_level") val groundLevel: Int?
-)
+) {
+    companion object {
+        fun getTestObject(): MainResponse {
+            return MainResponse(0.0, 1.0, 2.0, 3.0, 4, 5)
+        }
+    }
+
+}

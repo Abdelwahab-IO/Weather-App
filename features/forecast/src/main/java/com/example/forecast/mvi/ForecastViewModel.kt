@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core.SharedKeys
 import com.example.domain.entities.Weather
-import com.example.domain.repositories.Repository
 import com.example.domain.useCase.GetForecastUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,7 +12,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ForecastContainer @Inject constructor(
+class ForecastViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val getForecastUseCase: GetForecastUseCase
 ) : ViewModel() {
@@ -22,10 +21,11 @@ class ForecastContainer @Inject constructor(
 
 
     init {
-        getForeCast()
+
+        getForecast()
     }
 
-    fun getForeCast() {
+    private fun getForecast() {
         emitLoadingState()
         viewModelScope.launch {
             try {

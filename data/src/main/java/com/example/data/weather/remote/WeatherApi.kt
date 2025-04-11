@@ -1,6 +1,6 @@
 package com.example.data.weather.remote
 
-import ForecastResponse
+import com.example.data.weather.remote.response.ForecastResponse
 import com.example.data.weather.remote.response.WeatherResponse
 import retrofit2.http.GET
 import retrofit2.http.Query

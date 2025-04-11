@@ -24,19 +24,18 @@ import androidx.navigation.NavController
 import com.example.core.sharedUi.AppButton
 import com.example.core.sharedUi.ErrorScreenBody
 import com.example.core.sharedUi.LoadingScreenBody
-import com.example.domain.entities.Weather
 import com.example.forecast.components.ForecastCard
 import com.example.forecast.components.TodayWeatherCard
-import com.example.forecast.mvi.ForecastContainer
+import com.example.forecast.mvi.ForecastViewModel
 import com.example.forecast.mvi.ForecastState
 
 
 @Composable
 fun ForecastScreen(
     navController: NavController,
-    viewModel: ForecastContainer = hiltViewModel(),
+    viewModel: ForecastViewModel = hiltViewModel()
 
-    ) {
+) {
     Scaffold { paddingValues ->
         Box(Modifier.padding(paddingValues)) {
             when (val state = viewModel.forecastState.collectAsState().value) {

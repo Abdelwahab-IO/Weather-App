@@ -1,14 +1,13 @@
 package com.example.data.weather.repository
 
-import android.util.Log
 import com.example.data.weather.local.SharedPreferencesHelper
-import com.example.domain.entities.Weather
-import com.example.domain.repositories.Repository
 import com.example.data.weather.remote.WeatherApi
 import com.example.data.weather.remote.toDomain
+import com.example.domain.entities.Weather
+import com.example.domain.repositories.Repository
 import javax.inject.Inject
 
-class RepositoryImpl @Inject constructor(
+ class RepositoryImpl @Inject constructor(
     private val api: WeatherApi,
     private val sharedPreferencesHelper: SharedPreferencesHelper
 ) :
@@ -27,9 +26,7 @@ class RepositoryImpl @Inject constructor(
 
 
     override suspend fun getForecastByCity(city: String): List<Weather> {
-        val res = api.getForecast(city)
-        Log.d("vvvvvvvvvvvv",res.toString())
-       return res .toDomain().reversed()
+       return  api.getForecast(city).toDomain()
 
     }
 }
