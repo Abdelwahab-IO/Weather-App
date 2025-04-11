@@ -52,6 +52,7 @@ dependencies {
     api(libs.coil)
     api(libs.coil.network.okhttp)
     api(project(":domain"))
+    api("com.example.icon-formatter:icon-formatter:1.0.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

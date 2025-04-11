@@ -14,6 +14,7 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
+        mavenLocal()
         google()
         mavenCentral()
     }
@@ -28,3 +29,4 @@ include(":features:forecast")
 include(":features:search")
 include(":features:weather")
 include(":domain")
+include(":icon-formatter")
