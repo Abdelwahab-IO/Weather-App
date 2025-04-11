@@ -1,0 +1,82 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.example.icon-formatter",
+    "module": "icon-formatter",
+    "version": "1.0.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.9"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 11,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "icon-formatter-1.0.0.jar",
+          "url": "icon-formatter-1.0.0.jar",
+          "size": 2530,
+          "sha512": "8c5ea35a19be2bab21923aadfa347ba209cec7b6b8e4cf456a5408d3c3de92b263d4c96cababb42b8d3e678496b5d89f9a51fa607af5c98c72df850b161d28dd",
+          "sha256": "fd0df180a4eb6bb7f52035d31a91de94e1744405e43e3cbc516e62804a06bd20",
+          "sha1": "75493f2962058a7f1e5cc1e04e4a0423a7ab6fef",
+          "md5": "44bb13d5b5347e8c4a114a0d00453064"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 11,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "icon-formatter-1.0.0.jar",
+          "url": "icon-formatter-1.0.0.jar",
+          "size": 2530,
+          "sha512": "8c5ea35a19be2bab21923aadfa347ba209cec7b6b8e4cf456a5408d3c3de92b263d4c96cababb42b8d3e678496b5d89f9a51fa607af5c98c72df850b161d28dd",
+          "sha256": "fd0df180a4eb6bb7f52035d31a91de94e1744405e43e3cbc516e62804a06bd20",
+          "sha1": "75493f2962058a7f1e5cc1e04e4a0423a7ab6fef",
+          "md5": "44bb13d5b5347e8c4a114a0d00453064"
+        }
+      ]
+    }
+  ]
+}
