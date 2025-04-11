@@ -13,7 +13,7 @@ plugins {
 val properties = Properties()
 file("../local.properties").inputStream().use { properties.load(it) }
 val weatherApiKey = properties.getProperty("weatherApiKey")
-    ?: throw GradleException("weatherApiKey is missing")
+
 
 android {
     namespace = "com.example.data"
