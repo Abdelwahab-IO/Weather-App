@@ -1,6 +1,6 @@
 package com.example.domain
 
 data class AppError(
-    val errorName: String,
+    override val message: String,
     val stackTrace: String
 ) : Throwable()

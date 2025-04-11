@@ -7,7 +7,10 @@ import com.example.core.SharedKeys
 import com.example.domain.entities.Weather
 import com.example.domain.useCase.GetForecastUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,12 +20,30 @@ class ForecastViewModel @Inject constructor(
     private val getForecastUseCase: GetForecastUseCase
 ) : ViewModel() {
 
-    val forecastState = MutableStateFlow<ForecastState>(ForecastState.Loading)
+    private val _forecastState = MutableStateFlow<ForecastState>(ForecastState.Loading)
+    val forecastState: StateFlow<ForecastState>
+        get() = _forecastState
+    private val _eventsChannel = Channel<ForecastEvents>()
+    val eventsChannel: ReceiveChannel<ForecastEvents>
+        get() = _eventsChannel
 
 
     init {
+        processActions(ForecastActions.LoadData)
+    }
 
-        getForecast()
+    fun processActions(actions: ForecastActions) {
+        when (actions) {
+            ForecastActions.LoadData -> getForecast()
+            ForecastActions.NavigateBack -> emitNavigateBackEvent()
+            ForecastActions.ReloadData -> getForecast()
+        }
+    }
+
+    private fun emitNavigateBackEvent() {
+        viewModelScope.launch {
+            _eventsChannel.send(ForecastEvents.NavigateBack)
+        }
     }
 
     private fun getForecast() {
@@ -42,19 +63,22 @@ class ForecastViewModel @Inject constructor(
             todayWeather = list[0],
             weekWeather = list.subList(1, 8)
         )
-        this.forecastState.value = state
+        this._forecastState.value = state
 
     }
 
     private fun emitFailureState(e: Throwable) {
-        forecastState.value = ForecastState.Error(e.message.toString())
+        _forecastState.value = ForecastState.Error(e.message.toString())
+        viewModelScope.launch {
+            _eventsChannel.send(ForecastEvents.ErrorEvent(e.message.toString()))
+        }
     }
 
     private fun emitLoadingState() {
-        forecastState.value = ForecastState.Loading
+        _forecastState.value = ForecastState.Loading
     }
 
     private fun retrieveScarcity(): String {
-       return savedStateHandle.get<String>(SharedKeys.CITY_KEY)!!
+        return savedStateHandle.get<String>(SharedKeys.CITY_KEY)!!
     }
 }

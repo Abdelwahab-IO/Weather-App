@@ -15,19 +15,23 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.core.sharedUi.AppButton
 import com.example.core.sharedUi.ErrorScreenBody
 import com.example.core.sharedUi.LoadingScreenBody
+import com.example.core.sharedUi.WeatherAppbarWithThemeButton
 import com.example.forecast.components.ForecastCard
 import com.example.forecast.components.TodayWeatherCard
-import com.example.forecast.mvi.ForecastViewModel
+import com.example.forecast.mvi.ForecastActions
+import com.example.forecast.mvi.ForecastEvents
 import com.example.forecast.mvi.ForecastState
+import com.example.forecast.mvi.ForecastViewModel
+import kotlinx.coroutines.flow.consumeAsFlow
 
 
 @Composable
@@ -36,22 +40,34 @@ fun ForecastScreen(
     viewModel: ForecastViewModel = hiltViewModel()
 
 ) {
-    Scaffold { paddingValues ->
+    Scaffold(topBar = {
+        WeatherAppbarWithThemeButton("Forecast") { navController.popBackStack() }
+    }) { paddingValues ->
         Box(Modifier.padding(paddingValues)) {
             when (val state = viewModel.forecastState.collectAsState().value) {
-                is ForecastState.Error -> ErrorScreenBody(state.message) { }
+                is ForecastState.Error -> ErrorScreenBody(state.message) {
+                    viewModel.processActions(ForecastActions.ReloadData)
+                }
+
                 ForecastState.Loading -> LoadingScreenBody()
-                is ForecastState.Success -> ForecastSuccessBody(state, navController)
+                is ForecastState.Success -> ForecastSuccessBody(state)
             }
 
         }
     }
+    LaunchedEffect(Unit) {
+        viewModel.eventsChannel.consumeAsFlow().collect {
+            if (it is ForecastEvents.NavigateBack)
+                navController.popBackStack()
+        }
 
+
+    }
 
 }
 
 @Composable
-fun ForecastSuccessBody(state: ForecastState.Success, navController: NavController) {
+fun ForecastSuccessBody(state: ForecastState.Success) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -70,15 +86,9 @@ fun ForecastSuccessBody(state: ForecastState.Success, navController: NavControll
             modifier = Modifier.fillMaxWidth(),
             contentPadding = PaddingValues(vertical = 8.dp)
         ) {
-            items(state.weekWeather) { forecast ->
-                ForecastCard(forecast)
+            items(state.weekWeather) { forecast -> ForecastCard(forecast) }
+        }
 
-            }
-        }
-        Spacer(Modifier.height(8.dp))
-        AppButton(text = "Back") {
-            navController.popBackStack()
-        }
     }
 
 }

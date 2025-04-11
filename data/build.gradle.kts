@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
@@ -5,14 +7,19 @@ plugins {
     alias(libs.plugins.kotlin.kapt)
 
 }
+//get api key from local prop
+val localProperties = File(rootDir, "local.properties")
+val props = Properties().apply { load(localProperties.inputStream()) }
+val weatherApiKey = props["WEATHER_API_KEY"] as String
 
 android {
     namespace = "com.example.data"
     compileSdk = 35
 
     defaultConfig {
+        android.buildFeatures.buildConfig =true
         minSdk = 24
-
+        buildConfigField("String", "WEATHER_API_KEY", "\"$weatherApiKey\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -47,15 +54,14 @@ dependencies {
     implementation(libs.material)
     implementation(libs.hilt.android)
     implementation(libs.hilt.compose)
-    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
     kapt(libs.hilt.compiler)
 
     implementation(project(":domain"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    testImplementation("org.mockito:mockito-core:5.2.0")
-    testImplementation("org.mockito.kotlin:mockito-kotlin:4.1.0")
-    testImplementation ("net.bytebuddy:byte-buddy:1.17.5")
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.byte.buddy)
 
 }

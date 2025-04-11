@@ -68,6 +68,7 @@ class WeatherViewModel @Inject constructor(
     }
 
     private fun handleErrorState(e: Throwable) {
+
         errorMsg = e.message.toString()
         _uiState.value = UiState.Failure
     }

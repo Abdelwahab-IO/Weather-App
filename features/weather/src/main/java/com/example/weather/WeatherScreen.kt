@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -28,6 +30,7 @@ import com.example.core.sharedUi.AppNetworkWeatherIcon
 import com.example.core.sharedUi.ErrorScreenBody
 import com.example.core.sharedUi.LoadingScreenBody
 import com.example.core.sharedUi.UiState
+import com.example.core.sharedUi.WeatherAppbarWithThemeButton
 
 
 @Composable
@@ -36,9 +39,13 @@ fun WeatherScreen(
     viewModel: WeatherViewModel = hiltViewModel()
 ) {
     val uiState = viewModel.uiState.collectAsState().value
-    val weather = viewModel.weatherState.collectAsState().value
 
-    Scaffold { paddingValues ->
+    Scaffold(topBar = {
+        WeatherAppbarWithThemeButton("Weather")
+    })
+
+
+    { paddingValues ->
         Box(modifier = Modifier.padding(paddingValues)) {
             when (uiState) {
                 UiState.Success -> WeatherSuccessContent(viewModel, navController)
@@ -71,6 +78,7 @@ fun WeatherSuccessContent(viewModel: WeatherViewModel, navController: NavControl
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
@@ -80,7 +88,7 @@ fun WeatherSuccessContent(viewModel: WeatherViewModel, navController: NavControl
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.padding(bottom = 8.dp)
         )
-        AppNetworkWeatherIcon(weather.icon,weather.condition, size = 100)
+        AppNetworkWeatherIcon(weather.icon, weather.condition, size = 100)
         TemperatureRow("Temp", temp = weather.temperature)
         Spacer(Modifier.height(8.dp))
         TemperatureRow("Feels like", temp = weather.feelsLike)
@@ -98,6 +106,7 @@ fun WeatherSuccessContent(viewModel: WeatherViewModel, navController: NavControl
             text = weather.description,
             style = MaterialTheme.typography.bodyLarge
         )
+        Spacer(Modifier.height(16.dp))
         Row {
             AppButton(text = "Search") {
                 navController.navigateToSearch()
@@ -107,6 +116,7 @@ fun WeatherSuccessContent(viewModel: WeatherViewModel, navController: NavControl
                 navController.navigateToForecast(viewModel.lastSavedCity)
             }
         }
+
     }
 }
 

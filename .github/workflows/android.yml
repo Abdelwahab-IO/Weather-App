@@ -2,9 +2,9 @@ name: Android CI
 
 on:
   push:
-    branches: [ master , integrate-ci-cd]
+    branches: [ master ]
   pull_request:
-    branches: [ master , integrate-ci-cd ]
+    branches: [ master ]
 
 jobs:
   build:
@@ -36,6 +36,9 @@ jobs:
 
       - name: Build Debug APK
         run: ./gradlew assembleDebug
+
+      - name: Run Android Lint
+        run: ./gradlew lintDebug
 
       - name: Run Unit Tests
         run: ./gradlew testDebugUnitTest

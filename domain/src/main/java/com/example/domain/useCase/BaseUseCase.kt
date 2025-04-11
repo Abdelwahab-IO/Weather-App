@@ -9,7 +9,7 @@ abstract class BaseUseCase<T>(protected val repository: Repository) {
             return call.invoke()
         } catch (throwable: Throwable) {
             throw AppError(
-                errorName = throwable::class.java.simpleName,
+                message = throwable.localizedMessage,
                 stackTrace = throwable.stackTraceToString()
             )
         }
