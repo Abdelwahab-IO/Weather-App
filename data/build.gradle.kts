@@ -8,9 +8,12 @@ plugins {
 
 }
 //get api key from local prop
-val localProperties = File(rootDir, "local.properties")
-val props = Properties().apply { load(localProperties.inputStream()) }
-val weatherApiKey = props["WEATHER_API_KEY"] as String
+
+// Load properties from the root local.properties file
+val properties = Properties()
+file("../local.properties").inputStream().use { properties.load(it) }
+val weatherApiKey = properties.getProperty("weatherApiKey")
+    ?: throw GradleException("weatherApiKey is missing")
 
 android {
     namespace = "com.example.data"

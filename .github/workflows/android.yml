@@ -35,9 +35,6 @@ jobs:
         run: chmod +x ./gradlew
       - name: Build Debug APK
         run: ./gradlew assembleDebug -PweatherApiKey=${{ secrets.WEATHER_API_KEY }}
-      - name: Build Debug APK
-        run: ./gradlew assembleDebug
-
       - name: Run Android Lint
         run: ./gradlew lintDebug
 
