@@ -1,4 +1,3 @@
-import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.library)
@@ -7,12 +6,6 @@ plugins {
     alias(libs.plugins.kotlin.kapt)
 
 }
-//get api key from local prop
-
-// Load properties from the root local.properties file
-val properties = Properties()
-file("../local.properties").inputStream().use { properties.load(it) }
-val weatherApiKey = properties.getProperty("weatherApiKey")
 
 
 android {
@@ -22,7 +15,6 @@ android {
     defaultConfig {
         android.buildFeatures.buildConfig =true
         minSdk = 24
-        buildConfigField("String", "WEATHER_API_KEY", "\"$weatherApiKey\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }

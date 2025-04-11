@@ -8,6 +8,7 @@ plugins {
 }
 
 android {
+
     namespace = "com.example.weatherapp"
     compileSdk = 35
 
@@ -17,8 +18,9 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
-
+        buildConfigField("String", "API_KEY", "\"f771a14eeec9928ac00d6d76b7ad654f\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
     }
 
     buildTypes {
@@ -40,6 +42,7 @@ android {
     buildFeatures {
         compose = true
     }
+
 }
 
 dependencies {
