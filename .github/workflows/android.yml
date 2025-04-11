@@ -34,6 +34,8 @@ jobs:
       - name: Grant permission to Gradle wrapper
         run: chmod +x ./gradlew
 
+      - name: Publish library to Maven Local
+        run: ./gradlew :icon-formatter:publish
 
       - name: Run Android Lint
         run: ./gradlew lintDebug
@@ -41,8 +43,7 @@ jobs:
       - name: Run Unit Tests
         run: ./gradlew testDebugUnitTest
 
-      - name: Publish library to Maven Local
-        run: ./gradlew :icon-formatter:publish
+
 
       - name: Build Debug APK
         run: ./gradlew assembleDebug -PweatherApiKey=${{ secrets.WEATHER_API_KEY }}
