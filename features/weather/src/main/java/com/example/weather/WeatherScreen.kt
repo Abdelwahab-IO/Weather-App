@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -18,16 +17,14 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import coil3.compose.AsyncImage
 import com.example.core.SharedKeys
 import com.example.core.navigation.navigateToForecast
 import com.example.core.navigation.navigateToSearch
 import com.example.core.sharedUi.AppButton
+import com.example.core.sharedUi.AppNetworkWeatherIcon
 import com.example.core.sharedUi.ErrorScreenBody
 import com.example.core.sharedUi.LoadingScreenBody
 import com.example.core.sharedUi.UiState
@@ -83,14 +80,7 @@ fun WeatherSuccessContent(viewModel: WeatherViewModel, navController: NavControl
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.padding(bottom = 8.dp)
         )
-
-        AsyncImage(
-            model = "http://openweathermap.org/img/wn/${weather.icon}@4x.png",
-            contentDescription = weather.description,
-            modifier = Modifier.size(100.dp),
-            contentScale = ContentScale.FillBounds,
-            error = painterResource(com.example.core.R.drawable.alert_error_svgrepo_com)
-        )
+        AppNetworkWeatherIcon(weather.icon,weather.condition, size = 100)
         TemperatureRow("Temp", temp = weather.temperature)
         Spacer(Modifier.height(8.dp))
         TemperatureRow("Feels like", temp = weather.feelsLike)
