@@ -15,6 +15,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -28,7 +29,7 @@ import com.example.core.sharedUi.WeatherAppbarWithThemeButton
 fun SearchScreen(navController: NavController, searchViewModel: SearchViewModel = hiltViewModel()) {
     val query by searchViewModel.query.collectAsState()
     Scaffold(topBar = {
-        WeatherAppbarWithThemeButton("Search") { navController.popBackStack() }
+        WeatherAppbarWithThemeButton(stringResource(R.string.search)) { navController.popBackStack() }
     }) { paddingValues ->
         Box(
             modifier = Modifier
@@ -41,14 +42,14 @@ fun SearchScreen(navController: NavController, searchViewModel: SearchViewModel 
                     onValueChange = { newValue ->
                         searchViewModel.onQueryChanged(newValue)
                     },
-                    label = { Text("Search City") },
+                    label = { Text(stringResource(R.string.search_city)) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 8.dp),
                     singleLine = true
                 )
                 Spacer(modifier = Modifier.height(8.dp))
-                AppButton(text = "Fetch weather") {
+                AppButton(text = stringResource(R.string.fetch_weather)) {
                     navController.previousBackStackEntry
                         ?.savedStateHandle
                         ?.set(SharedKeys.CITY_KEY, searchViewModel.query.value)

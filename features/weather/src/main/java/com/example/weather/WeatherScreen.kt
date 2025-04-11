@@ -19,6 +19,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -41,7 +42,7 @@ fun WeatherScreen(
     val uiState = viewModel.uiState.collectAsState().value
 
     Scaffold(topBar = {
-        WeatherAppbarWithThemeButton("Weather")
+        WeatherAppbarWithThemeButton(stringResource(R.string.weather))
     })
 
 
@@ -89,13 +90,13 @@ fun WeatherSuccessContent(viewModel: WeatherViewModel, navController: NavControl
             modifier = Modifier.padding(bottom = 8.dp)
         )
         AppNetworkWeatherIcon(weather.icon, weather.condition, size = 100)
-        TemperatureRow("Temp", temp = weather.temperature)
+        TemperatureRow(stringResource(R.string.temp_label), temp = weather.temperature)
         Spacer(Modifier.height(8.dp))
-        TemperatureRow("Feels like", temp = weather.feelsLike)
+        TemperatureRow(stringResource(R.string.feels_like_label), temp = weather.feelsLike)
         Spacer(Modifier.height(8.dp))
-        TemperatureRow("Min", temp = weather.minTemperature)
+        TemperatureRow(stringResource(R.string.min_label), temp = weather.minTemperature)
         Spacer(Modifier.height(8.dp))
-        TemperatureRow("Max", temp = weather.maxTemperature)
+        TemperatureRow(stringResource(R.string.max_label), temp = weather.maxTemperature)
         Spacer(Modifier.height(8.dp))
         Text(
             text = weather.condition,
@@ -108,11 +109,11 @@ fun WeatherSuccessContent(viewModel: WeatherViewModel, navController: NavControl
         )
         Spacer(Modifier.height(16.dp))
         Row {
-            AppButton(text = "Search") {
+            AppButton(text = stringResource(R.string.search_button)) {
                 navController.navigateToSearch()
             }
             Spacer(Modifier.width(8.dp))
-            AppButton(text = "Forecast") {
+            AppButton(text = stringResource(R.string.forecast_button)) {
                 navController.navigateToForecast(viewModel.lastSavedCity)
             }
         }

@@ -19,6 +19,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -41,7 +42,7 @@ fun ForecastScreen(
 
 ) {
     Scaffold(topBar = {
-        WeatherAppbarWithThemeButton("Forecast") { navController.popBackStack() }
+        WeatherAppbarWithThemeButton(stringResource(R.string.days_forecast)) { navController.popBackStack() }
     }) { paddingValues ->
         Box(Modifier.padding(paddingValues)) {
             when (val state = viewModel.forecastState.collectAsState().value) {
@@ -78,7 +79,7 @@ fun ForecastSuccessBody(state: ForecastState.Success) {
         TodayWeatherCard(state.todayWeather)
         Spacer(modifier = Modifier.height(24.dp))
         Text(
-            text = "7-Day Forecast",
+            text = stringResource(R.string.days_forecast),
             style = MaterialTheme.typography.headlineSmall,
             modifier = Modifier.padding(bottom = 8.dp)
         )

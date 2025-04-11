@@ -11,6 +11,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.example.core.R
 import com.example.core.compositonProviders.ThemeModeCompositionProvider
 
 
@@ -26,7 +28,7 @@ fun WeatherAppbarWithThemeButton(title: String, onBackPressed: (() -> Unit)? = n
                 IconButton(onClick = onBackPressed) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Menu"
+                        contentDescription = stringResource(R.string.menu)
                     )
                 }
         },

@@ -15,7 +15,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.core.R
 
 
 @Composable
@@ -45,10 +47,10 @@ fun ErrorScreenBody(
                 modifier = Modifier.padding(bottom = 16.dp)
             )
             Row {
-                AppButton(text = "Retry") { onRetry() }
+                AppButton(text =  stringResource(R.string.retry)) { onRetry() }
                 if (onClear != null) {
                     Spacer(Modifier.width(8.dp))
-                    AppButton(text = "Clear") { onClear() }
+                    AppButton(text =  stringResource(R.string.clear)) { onClear() }
                 }
 
 
